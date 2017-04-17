@@ -8,16 +8,9 @@ class Evaluator(FuzzyVisitor):
         self.funcs = funcs
 
     def visitFile(self, ctx: FuzzyParser.FileContext):
-        return self.visit(ctx.model())
-
-    def visitSugeno(self, ctx: FuzzyParser.SugenoContext):
-        return ctx.mod.text, ([self.visit(r) for r in ctx.sugeno_rule()],)
-
-    def visitMamdani(self, ctx: FuzzyParser.MamdaniContext):
-        return ctx.mod.text, (ctx.defuzzy.text, [self.visit(r) for r in ctx.mamdani_tsukamoto_rule()])
-
-    def visitTsukamoto(self, ctx: FuzzyParser.TsukamotoContext):
-        return ctx.mod.text, ([self.visit(r) for r in ctx.mamdani_tsukamoto_rule()],)
+        return ctx.ID(0).getText(), \
+               ctx.ID(1).getText() if ctx.ID(1) else None, \
+               [self.visit(r) for r in ctx.fuzzy_rule()]
 
     def visitSRule(self, ctx: FuzzyParser.SRuleContext):
         w = self.visit(ctx.logic_expr())

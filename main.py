@@ -3,6 +3,7 @@ import sys
 
 from antlr4 import *
 
+import fuzzy.defuzzifiers as defuzzifiers
 import fuzzy.functions as functions
 import fuzzy.models as models
 from fuzzy.parsing.FuzzyLexer import FuzzyLexer
@@ -27,12 +28,22 @@ def main(argv):
         funcs[f] = getattr(functions, f_name)(*l)
 
     evaluator = Evaluator(values, funcs)
-    model, output = evaluator.visit(tree)
+    model, defuzzy, output = evaluator.visit(tree)
 
-    if model == 'Sugeno':
-        print(models.sugeno(*output))
+    model = model.lower()
+
+    if model == 'mamdani':
+        defuzzy = defuzzifiers.get_defuzzy(defuzzy.lower())
+        print(models.mamdani(output, defuzzy, funcs))
+
+    elif model == 'sugeno':
+        print(models.sugeno(output))
+
+    elif model == 'tsukamoto':
+        print(models.tsukamoto(output, funcs))
+
     else:
-        print(output)
+        raise AttributeError()
 
 
 if __name__ == '__main__':

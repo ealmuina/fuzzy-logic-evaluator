@@ -18,3 +18,12 @@ def bisecter():
 
 def mean_max():
     pass
+
+
+def get_defuzzy(name):
+    if name == 'centroid':
+        return centroid
+    elif name == 'bisecter':
+        return bisecter
+    elif name == 'mean of max':
+        return mean_max

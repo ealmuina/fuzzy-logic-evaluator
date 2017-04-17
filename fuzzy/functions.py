@@ -1,9 +1,26 @@
-class Trapezoid:
+class MembershipFunction:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+    def __call__(self, x):
+        raise NotImplementedError()
+
+    def points(self, step=0.1):
+        x = self.start
+        while x < self.end:
+            yield x, self(x)
+            x += step
+
+
+class Trapezoid(MembershipFunction):
     def __init__(self, a, b, c=None, d=None):
         self.a = a
         self.b = b
         self.c = c
         self.d = d
+
+        super().__init__(a, d if d else c if c else b)
 
     def __call__(self, x):
         if self.a is not None:
@@ -29,7 +46,7 @@ class Triangle(Trapezoid):
         super().__init__(a, b, c)
 
 
-class Polynomial:
+class Polynomial(MembershipFunction):
     pass
 
 

@@ -5,25 +5,14 @@ grammar Fuzzy;
  */
 
 compileUnit
-    : '[' 'model' ']' model EOF                             # File
+    :   '[' 'model' ']' ID
+        ('[' 'defuzzy' ']' ID)?
+        fuzzy_rule+ EOF                                     # File
     ;
 
-model
-	:   mod='Sugeno' sugeno_rule+                           # Sugeno
-
-	|   mod='Mamdani' '[' 'defuzzy' ']'
-        defuzzy=('Centroid' | 'Bisecter' | 'Mean of Max')
-        mamdani_tsukamoto_rule+                             # Mamdani
-
-	|   mod='Tsukamoto' mamdani_tsukamoto_rule+             # Tsukamoto
-	;
-
-sugeno_rule
-    :   logic_expr '=>' ID '=' arithmetic_expr              # SRule
-    ;
-
-mamdani_tsukamoto_rule
-    :   logic_expr '=>' ID 'is' ID                          # MTRule
+fuzzy_rule
+    :   logic_expr 'then' ID '=' arithmetic_expr            # SRule
+    |   logic_expr 'then' ID 'is' ID                        # MTRule
     ;
 
 logic_expr
