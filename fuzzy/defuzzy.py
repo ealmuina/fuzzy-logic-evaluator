@@ -10,3 +10,11 @@ def centroid(func_aggr, start, stop, step=0.1):
         di += step
 
     return num / den
+
+
+def bisecter():
+    pass
+
+
+def mean_max():
+    pass

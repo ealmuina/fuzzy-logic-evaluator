@@ -3,10 +3,11 @@ import sys
 
 from antlr4 import *
 
-import functions
-from models.mamdani import Mamdani
-from parsing.FuzzyLexer import FuzzyLexer
-from parsing.FuzzyParser import FuzzyParser
+import fuzzy.functions as functions
+import fuzzy.models as models
+from fuzzy.parsing.FuzzyLexer import FuzzyLexer
+from fuzzy.parsing.FuzzyParser import FuzzyParser
+from fuzzy.parsing.evaluator import Evaluator
 
 
 def main(argv):
@@ -25,9 +26,13 @@ def main(argv):
         f_name = l.pop(0)
         funcs[f] = getattr(functions, f_name)(*l)
 
-    # noinspection SpellCheckingInspection
-    mamdani = Mamdani(values, funcs)
-    print(mamdani.visit(tree))
+    evaluator = Evaluator(values, funcs)
+    model, output = evaluator.visit(tree)
+
+    if model == 'Sugeno':
+        print(models.sugeno(*output))
+    else:
+        print(output)
 
 
 if __name__ == '__main__':
