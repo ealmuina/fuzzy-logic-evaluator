@@ -43,13 +43,16 @@ class FuzzyVisitor(ParseTreeVisitor):
     def visitLParens(self, ctx: FuzzyParser.LParensContext):
         return self.visitChildren(ctx)
 
+
     # Visit a parse tree produced by FuzzyParser#LOr.
     def visitLOr(self, ctx: FuzzyParser.LOrContext):
         return self.visitChildren(ctx)
 
+
     # Visit a parse tree produced by FuzzyParser#ANeg.
     def visitANeg(self, ctx: FuzzyParser.ANegContext):
         return self.visitChildren(ctx)
+
 
     # Visit a parse tree produced by FuzzyParser#AVar.
     def visitAVar(self, ctx: FuzzyParser.AVarContext):

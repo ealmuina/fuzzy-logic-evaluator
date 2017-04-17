@@ -6,6 +6,8 @@ grammar Fuzzy;
 
 compileUnit
     :   '[' 'model' ']' ID
+        '[' 't-norm' ']' ID
+        '[' 't-conorm' ']' ID
         ('[' 'defuzzy' ']' ID)?
         fuzzy_rule+ EOF                                     # File
     ;

@@ -1,4 +1,7 @@
-class MembershipFunction:
+from functools import reduce
+
+
+class Function:
     def __init__(self, start, end):
         self.start = start
         self.end = end
@@ -13,7 +16,7 @@ class MembershipFunction:
             x += step
 
 
-class Trapezoid(MembershipFunction):
+class Trapezoid(Function):
     def __init__(self, a, b, c=None, d=None):
         self.a = a
         self.b = b
@@ -46,17 +49,31 @@ class Triangle(Trapezoid):
         super().__init__(a, b, c)
 
 
-class Polynomial(MembershipFunction):
+class Polynomial(Function):
     pass
 
 
-class Compose:
+class Compose(Function):
     def __init__(self, aggr):
         self.aggr = aggr
 
+        start = reduce(
+            lambda x, y: x if x[1].start < y[1].start else y,
+            aggr,
+            aggr[0]
+        )[1].start
+
+        end = reduce(
+            lambda x, y: x if x[1].end > y[1].end else y,
+            aggr,
+            aggr[0]
+        )[1].end
+
+        super().__init__(start, end)
+
     def __call__(self, x):
         y = 0
-        for func, trunc in self.aggr:
+        for trunc, func in self.aggr:
             yi = min(trunc, func(x))
             y = max(y, yi)
         return y
