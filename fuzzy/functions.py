@@ -1,3 +1,4 @@
+import math
 from functools import reduce
 
 
@@ -14,6 +15,32 @@ class Function:
         while x < self.end:
             yield x, self(x)
             x += step
+
+
+class Compose(Function):
+    def __init__(self, aggr):
+        self.aggr = aggr
+
+        start = reduce(
+            lambda x, y: x if x[1].start < y[1].start else y,
+            aggr,
+            aggr[0]
+        )[1].start
+
+        end = reduce(
+            lambda x, y: x if x[1].end > y[1].end else y,
+            aggr,
+            aggr[0]
+        )[1].end
+
+        super().__init__(start, end)
+
+    def __call__(self, x):
+        y = 0
+        for trunc, func in self.aggr:
+            yi = min(trunc, func(x))
+            y = max(y, yi)
+        return y
 
 
 class Trapezoid(Function):
@@ -49,31 +76,21 @@ class Triangle(Trapezoid):
         super().__init__(a, b, c)
 
 
-class Polynomial(Function):
-    pass
-
-
-class Compose(Function):
-    def __init__(self, aggr):
-        self.aggr = aggr
-
-        start = reduce(
-            lambda x, y: x if x[1].start < y[1].start else y,
-            aggr,
-            aggr[0]
-        )[1].start
-
-        end = reduce(
-            lambda x, y: x if x[1].end > y[1].end else y,
-            aggr,
-            aggr[0]
-        )[1].end
-
-        super().__init__(start, end)
+class Sigmoid(Function):
+    def __init__(self, k, x0):
+        self.k = k  # width
+        self.x0 = x0  # center
+        super().__init__(start=-abs(6 / k), end=abs(6 / k))  # thanks Wikipedia
 
     def __call__(self, x):
-        y = 0
-        for trunc, func in self.aggr:
-            yi = min(trunc, func(x))
-            y = max(y, yi)
-        return y
+        return 1 / (1 + math.e ** (-self.k * (x - self.x0)))
+
+
+class Gaussian(Function):
+    def __init__(self, b, c):
+        self.b = b  # center
+        self.c = c  # width
+        super().__init__(start=-abs(6 * c), end=abs(6 * c))
+
+    def __call__(self, x):
+        return math.e ** -(((x - self.b) ** 2) / (2 * self.c ** 2))

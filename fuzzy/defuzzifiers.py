@@ -1,6 +1,3 @@
-from functools import reduce
-
-
 def centroid(func_aggr, step=0.1):
     points = func_aggr.points(step)
     num, den = 0, 0
@@ -36,13 +33,4 @@ def mean_max(func_aggr, step=0.1):
             maximums.clear()
             maximums.append(x)
 
-    return reduce(lambda a, b: a + b / len(maximums), maximums)
-
-
-def get_defuzzy(name):
-    if name == 'centroid':
-        return centroid
-    elif name == 'bisecter':
-        return bisecter
-    elif name == 'mean_max':
-        return mean_max
+    return sum(maximums) / len(maximums)

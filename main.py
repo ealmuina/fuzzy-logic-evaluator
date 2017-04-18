@@ -33,7 +33,7 @@ def main(argv):
     model = model.lower()
 
     if model == 'mamdani':
-        defuzzy = defuzzifiers.get_defuzzy(defuzzy.lower())
+        defuzzy = getattr(defuzzifiers, defuzzy.lower())
         print(models.mamdani(output, defuzzy, funcs))
 
     elif model == 'sugeno':
