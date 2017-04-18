@@ -1,0 +1,35 @@
+{
+  "variables": {
+    "service": 3,
+    "food": 8
+  },
+  "functions": {
+    "poor": [
+      "Sigmoid", -2, 2
+    ],
+    "good": [
+      "Gaussian", 5, 1.5
+    ],
+    "excellent": [
+      "Sigmoid", 2, 8
+    ],
+    "rancid": [
+      "Trapezoid", null, 1.5, 5
+    ],
+    "eatable": [
+      "Triangle", 3, 5, 7
+    ],
+    "delicious": [
+      "Trapezoid", 6, 9
+    ],
+    "cheap": [
+      "Triangle", 0, 5, 10
+    ],
+    "average": [
+      "Triangle", 10, 15, 20
+    ],
+    "generous": [
+      "Trapezoid", 15, 20, 25
+    ]
+  }
+}

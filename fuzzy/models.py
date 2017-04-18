@@ -4,7 +4,7 @@ from itertools import groupby
 from .functions import Compose
 
 
-def mamdani(rules_output, defuzzy, functions):
+def mamdani(rules_output, defuzzy, functions, step=0.1):
     rules_output.sort(key=lambda r: r[1])
     result = {}
 
@@ -13,7 +13,7 @@ def mamdani(rules_output, defuzzy, functions):
             lambda ro: (ro[0], functions[ro[2]]),
             rules_output)
         compose = Compose(list(aggr_func))
-        result[k] = defuzzy(compose)
+        result[k] = defuzzy(compose, step)
 
     return result
 

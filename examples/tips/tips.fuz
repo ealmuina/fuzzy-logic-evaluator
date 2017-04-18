@@ -1,0 +1,33 @@
+
+[model] Mamdani
+
+[t-norm] min
+[t-conorm] max
+[defuzzy] bisecter
+
+service is poor or food is rancid           then    tip is cheap
+service is good                             then    tip is average
+service is excellent or food is delicious   then    tip is generous
+
+
+/*
+[model] Sugeno
+
+[t-norm] min
+[t-conorm] max
+
+service is poor or food is rancid           then    tip = (service + food) / 2
+service is good                             then    tip = 2 * service
+service is excellent or food is delicious   then    tip = (service + food) ** 2
+*/
+
+/*
+[model] Tsukamoto
+
+[t-norm] min
+[t-conorm] max
+
+service is poor or food is rancid           then    tip is cheap
+service is good                             then    tip is average
+service is excellent or food is delicious   then    tip is generous
+*/
