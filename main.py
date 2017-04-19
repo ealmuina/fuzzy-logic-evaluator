@@ -1,6 +1,5 @@
 import argparse
 import json
-import sys
 
 from antlr4 import *
 
@@ -17,22 +16,26 @@ def print_dict(d: dict):
         print('%s: %.3f' % (key, value))
 
 
-def main(argv):
+def main():
+    # Parse arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('rules')
     parser.add_argument('data')
     parser.add_argument('--step', default=0.1, type=float)
     args = parser.parse_args()
 
+    # Grab rules, data and step from parsed arguments
     rules = FileStream(args.rules)
     data = json.load(open(args.data))
     step = args.step
 
+    # Parse rules file
     lexer = FuzzyLexer(rules)
     stream = CommonTokenStream(lexer)
     parser = FuzzyParser(stream)
     tree = parser.compileUnit()
 
+    # Retrieve dictionaries from data JSON file
     values = data['variables']
     funcs = data['functions']
 
@@ -40,6 +43,7 @@ def main(argv):
         f_name = l.pop(0)
         funcs[f] = getattr(functions, f_name)(*l)
 
+    # Evaluate rules expressions
     evaluator = Evaluator(values, funcs)
     model, defuzzy, output = evaluator.visit(tree)
 
@@ -60,4 +64,4 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main()

@@ -1,4 +1,4 @@
-# Generated from /home/eddy/PycharmProjects/fuzzy_logic/fuzzy/parsing/Fuzzy.g4 by ANTLR 4.7
+# Generated from /media/eddy/Erato/Zchool/Computer Science/4º/VIII Semestre/Simulación/Proyectos/2. Lógica difusa/fuzzy_logic/fuzzy/parsing/Fuzzy.g4 by ANTLR 4.7
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .FuzzyParser import FuzzyParser
@@ -58,9 +58,11 @@ class FuzzyVisitor(ParseTreeVisitor):
     def visitAVar(self, ctx: FuzzyParser.AVarContext):
         return self.visitChildren(ctx)
 
+
     # Visit a parse tree produced by FuzzyParser#ANumber.
     def visitANumber(self, ctx: FuzzyParser.ANumberContext):
         return self.visitChildren(ctx)
+
 
     # Visit a parse tree produced by FuzzyParser#AArithmetic.
     def visitAArithmetic(self, ctx: FuzzyParser.AArithmeticContext):

@@ -3,7 +3,16 @@ from functools import reduce
 
 
 class Function:
+    """
+    Generic function representation
+    """
+
     def __init__(self, start, end):
+        """
+        Initialize a new function object
+        :param start: First 'relevant' value in the function's domain
+        :param end: Last 'relevant' value in the function's domain
+        """
         self.start = start
         self.end = end
 
@@ -11,6 +20,10 @@ class Function:
         raise NotImplementedError()
 
     def points(self, step=0.1):
+        """
+        Generator of tuples (x, f(x)) in the interval [self.start, self.end]
+        :param step: Distance between points in the discretized function domain
+        """
         x = self.start
         while x < self.end:
             yield x, self(x)
@@ -18,15 +31,26 @@ class Function:
 
 
 class Compose(Function):
+    """
+    Represents the composition of several functions
+    """
+
     def __init__(self, aggr):
+        """
+        Initialize a new composed function
+        :param aggr: List of tuples (trunc, func) where trunc is an upper limit to func's image
+        """
+
         self.aggr = aggr
 
+        # Store smallest start in member functions as the own's start
         start = reduce(
             lambda x, y: x if x[1].start < y[1].start else y,
             aggr,
             aggr[0]
         )[1].start
 
+        # Store biggest end in member functions as the own's end
         end = reduce(
             lambda x, y: x if x[1].end > y[1].end else y,
             aggr,
@@ -36,9 +60,10 @@ class Compose(Function):
         super().__init__(start, end)
 
     def __call__(self, x):
+        # Check produced image of each member function and keep the greatest
         y = 0
         for trunc, func in self.aggr:
-            yi = min(trunc, func(x))
+            yi = min(trunc, func(x))  # Trunc function if necessary
             y = max(y, yi)
         return y
 

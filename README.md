@@ -44,7 +44,7 @@ Los tipos de funciones soportados son:
   - `b`: Centro de la campana
   - `c`: Ancho de la campana
 
-`<rules>.fuz`: fichero con el siguiente formato:
+`<rules>.fuz`: fichero con la especificación de las reglas y el modelo de inferencia; sigue el siguiente formato:
 ```
 [model] (Mamdani | Sugeno | Tsukamoto)
 [t-norm] (min | product)
@@ -54,7 +54,7 @@ Los tipos de funciones soportados son:
 input1 is val1 or input2 is val2 then output1 is val3
 ```
 Todas las variables definidas a la izquierda de los `then` deben tener un valor asociado en el fichero de datos (.json). Asimismo ha de ocurrir con los valores lingüísticos usados en las reglas.
-En el caso de usar el modelo *Sugeno*, el valor la parte derecha de los `then` será una expresión aritmética que puede usar valores numéricos y variables de entrada. Los operadores permitidos en este caso son '+', '-', '*', '/', '()' y '**' (potencia).
+En el caso de usar el modelo *Sugeno*, el valor la parte derecha de los `then` será una expresión aritmética que puede usar valores numéricos y variables de entrada. Los operadores permitidos en este caso son `+`, `-`, `*`, `/` y `**` (potencia).
 
 En los campos `t-norm` y `t-conorm` se indicarán las operaciones para evaluar las expresiones `and` y `or` respectivamente.
 

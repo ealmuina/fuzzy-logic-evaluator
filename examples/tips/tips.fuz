@@ -3,7 +3,7 @@
 
 [t-norm] min
 [t-conorm] max
-[defuzzy] bisecter
+[defuzzy] centroid
 
 service is poor or food is rancid           then    tip is cheap
 service is good                             then    tip is average
