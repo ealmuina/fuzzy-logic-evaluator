@@ -19,14 +19,14 @@ python main.py <data> .json <rules> .fuz [--step <step_size>]
 `<data> .json`: file in JSON format with the specifications of the input variables and their respective values, as well as the membership functions. An example of a variable and a function would be:
 ```json
 {
-    "variables": {
-        "input1": 5.3
-    }
-    "functions": {
-        "membership_func1": [
-            "Trapezoid", 10, 15, 20, 25
-        ]
-    }
+  "variables": {
+    "input1": 5.3
+  }
+  "functions": {
+    "membership_func1": [
+      "Trapezoid", 10, 15, 20, 25
+    ]
+  }
 }
 ```
 As can be deduced from the example, the functions are specified by a list, whose first element is the type of the function and the rest are the parameters that characterize its behavior; the latter being specific to each type.
